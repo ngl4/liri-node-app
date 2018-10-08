@@ -9,9 +9,7 @@ var request = require("request");
 //moment npm
 var moment = require("moment");
 
-//---1-----------------------------------------------
 //node-spotify-api npm
-//`node liri.js spotify-this-song '<song name here>'`
 var Spotify = require("node-spotify-api");
 var spotify = new Spotify(keys.spotify);
 
@@ -75,34 +73,7 @@ function searchSong(songName) {
   }
 }
 
-if (process.argv[2] === "spotify-this-song") {
-  var nodeArgs = process.argv;
-  var songName = "";
- //logic for artist name with more than one word
- for (var i = 3; i < nodeArgs.length; i++) {
-   if (i > 3 && i < nodeArgs.length) {
-     songName = songName + "+" + nodeArgs[i];
-   } else {
-     songName += nodeArgs[i];
-   }
- }
-  searchSong(songName);
-}
-//---2-----------------------------------------------
-//Bands in Towns API: `node liri.js concert-this <artist/band name here>`
-//var artist = process.argv[3]
-if (process.argv[2] === "concert-this") {
-  var nodeArgs = process.argv;
-  var artistName = "";
-
-  //logic for artist name with more than one word
-  for (var i = 3; i < nodeArgs.length; i++) {
-    if (i > 3 && i < nodeArgs.length) {
-      artistName = artistName + "+" + nodeArgs[i];
-    } else {
-      artistName += nodeArgs[i];
-    }
-  }
+function searchConcert(artistName) {
 
   var query_Bands_URL =
     "https://rest.bandsintown.com/artists/" +
@@ -128,21 +99,8 @@ if (process.argv[2] === "concert-this") {
     }
   });
 }
-//---3-----------------------------------------------
-//`node liri.js movie-this '<movie name here>'`
-if (process.argv[2] === "movie-this") {
-  var nodeArgs = process.argv;
-  var movieName = "";
 
-  //logic for movie name with more than one word
-  for (var i = 3; i < nodeArgs.length; i++) {
-    if (i > 3 && i < nodeArgs.length) {
-      movieName = movieName + "+" + nodeArgs[i];
-    } else {
-      movieName += nodeArgs[i];
-    }
-  }
-
+function searchMovie(movieName){
   var query_OMDB_URL =
     "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
 
@@ -176,6 +134,57 @@ if (process.argv[2] === "movie-this") {
     }
   });
 }
+
+//---1-----------------------------------------------
+//`node liri.js spotify-this-song '<song name here>'`
+if (process.argv[2] === "spotify-this-song") {
+  var nodeArgs = process.argv;
+  var songName = "";
+ //logic for artist name with more than one word
+ for (var i = 3; i < nodeArgs.length; i++) {
+   if (i > 3 && i < nodeArgs.length) {
+     songName = songName + "+" + nodeArgs[i];
+   } else {
+     songName += nodeArgs[i];
+   }
+ }
+  searchSong(songName);
+}
+//---2-----------------------------------------------
+//Bands in Towns API: `node liri.js concert-this <artist/band name here>`
+//var artist = process.argv[3]
+if (process.argv[2] === "concert-this") {
+  var nodeArgs = process.argv;
+  var artistName = "";
+
+  //logic for artist name with more than one word
+  for (var i = 3; i < nodeArgs.length; i++) {
+    if (i > 3 && i < nodeArgs.length) {
+      artistName = artistName + "+" + nodeArgs[i];
+    } else {
+      artistName += nodeArgs[i];
+    }
+  }
+  searchConcert(artistName); 
+
+}
+//---3-----------------------------------------------
+//`node liri.js movie-this '<movie name here>'`
+if (process.argv[2] === "movie-this") {
+  var nodeArgs = process.argv;
+  var movieName = "";
+
+  //logic for movie name with more than one word
+  for (var i = 3; i < nodeArgs.length; i++) {
+    if (i > 3 && i < nodeArgs.length) {
+      movieName = movieName + "+" + nodeArgs[i];
+    } else {
+      movieName += nodeArgs[i];
+    }
+  }
+  searchMovie(movieName);
+  
+}
 //---4-----------------------------------------------
 //`node liri.js do-what-it-says`
 // Core node package for reading and writing files
@@ -192,16 +201,17 @@ if (process.argv[2] === "do-what-it-says") {
     var dataArr = data.split(",");
     console.log(dataArr);
 
-    var command = process.argv[2] = dataArr[0]; 
-    var newSearch = process.argv[3] = dataArr[1]; 
-    if (command === "spotify-this-song"){
-      searchSong(newSearch);
-    }else if (command === "movie-this"){
-
-    }else if (command === "concert-this"){
-      
+    process.argv[2] = dataArr[0]; 
+    process.argv[3] = dataArr[1]; 
+    if (process.argv[2] === "spotify-this-song"){
+      searchSong(process.argv[3]);
+//////// //-//TODO: concert-this is not working!!!!?????------
+    }else if (process.argv[2] === "concert-this"){
+      searchConcert(process.argv[3]);
+    }else if (process.argv[2] === "movie-this"){
+      searchMovie(process.argv[3]);
     }
 
-    
+ 
   });
 }
