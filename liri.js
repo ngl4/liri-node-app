@@ -1,4 +1,4 @@
-//to read and set any environment variables with the dotenv package
+//read and set any environment variables with the dotenv package
 require("dotenv").config();
 
 //import keys.js file
@@ -9,83 +9,86 @@ var request = require("request");
 //moment npm
 var moment = require("moment");
 
+//---1-----------------------------------------------
 //node-spotify-api npm
 //`node liri.js spotify-this-song '<song name here>'`
-//node-spotify-api
 var Spotify = require("node-spotify-api");
 var spotify = new Spotify(keys.spotify);
 
-if (process.argv[2] === "spotify-this-song") {
 
-  var nodeArgs = process.argv;
-  var songName = "";
-    //logic for artist name with more than one word
-    for (var i = 3; i < nodeArgs.length; i++) {
-      if (i > 3 && i < nodeArgs.length) {
-        songName = songName + "+" + nodeArgs[i];
-      } else {
-        songName += nodeArgs[i];
-      }
-    }
-
+function searchSong(songName) {
   if (songName !== "") {
     spotify
-    .request(
-      "https://api.spotify.com/v1/search?type=track&q=" + songName + "&limit=5"
-    )
-    .then(function(data) {
-
-      data.tracks.items.forEach(function(element) {
-
-        console.log(
-          "Artist Name: " +
-            element.artists[0].name +
-            "\nAlbum Name: " +
-            element.album.name + 
-            "\nSong Name: " +
-            element.name +  
-            "\nPreview Url: " +
-            element.preview_url + 
-            "\n-------------------------------------"
-        );
-       });
-    })
-    .catch(function(err) {
-      console.error("Error occurred: " + err);
-    });
-
-  }else {
-    var songName = "the+sign";
+      .request(
+        "https://api.spotify.com/v1/search?type=track&q=" +
+          songName +
+          "&limit=5"
+      )
+      .then(function(data) {
+        data.tracks.items.forEach(function(element) {
+          console.log(
+            "Artist Name: " +
+              element.artists[0].name +
+              "\nAlbum Name: " +
+              element.album.name +
+              "\nSong Name: " +
+              element.name +
+              "\nPreview Url: " +
+              element.preview_url +
+              "\n-------------------------------------"
+          );
+        });
+      })
+      .catch(function(err) {
+        console.error("Error occurred: " + err);
+      });
+  } else {
+    songName = "the+sign";
     var artistName = "ace+of+base";
 
     spotify
-    .request(
-      "https://api.spotify.com/v1/search?type=track&q=" + songName + "%20artist:" + artistName +"&limit=1"
-    )
-    .then(function(data) {
-      data.tracks.items.forEach(function(element) {
-        console.log(
-          "Artist Name: " +
-            element.artists[0].name +
-            "\nAlbum Name: " +
-            element.album.name + 
-            "\nSong Name: " +
-            element.name +  
-            "\nPreview Url: " +
-            element.preview_url + 
-            "\n-------------------------------------"
-        );
-       });
-    })
-    .catch(function(err) {
-      console.error("Error occurred: " + err);
-    });
-
+      .request(
+        "https://api.spotify.com/v1/search?type=track&q=" +
+          songName +
+          "%20artist:" +
+          artistName +
+          "&limit=1"
+      )
+      .then(function(data) {
+        data.tracks.items.forEach(function(element) {
+          console.log(
+            "Artist Name: " +
+              element.artists[0].name +
+              "\nAlbum Name: " +
+              element.album.name +
+              "\nSong Name: " +
+              element.name +
+              "\nPreview Url: " +
+              element.preview_url +
+              "\n-------------------------------------"
+          );
+        });
+      })
+      .catch(function(err) {
+        console.error("Error occurred: " + err);
+      });
   }
-
-
 }
 
+if (process.argv[2] === "spotify-this-song") {
+  var nodeArgs = process.argv;
+  var songName = "";
+ //logic for artist name with more than one word
+ for (var i = 3; i < nodeArgs.length; i++) {
+   if (i > 3 && i < nodeArgs.length) {
+     songName = songName + "+" + nodeArgs[i];
+   } else {
+     songName += nodeArgs[i];
+   }
+ }
+  searchSong(songName);
+}
+//---2-----------------------------------------------
 //Bands in Towns API: `node liri.js concert-this <artist/band name here>`
 //var artist = process.argv[3]
 if (process.argv[2] === "concert-this") {
@@ -125,7 +128,7 @@ if (process.argv[2] === "concert-this") {
     }
   });
 }
-
+//---3-----------------------------------------------
 //`node liri.js movie-this '<movie name here>'`
 if (process.argv[2] === "movie-this") {
   var nodeArgs = process.argv;
@@ -171,5 +174,34 @@ if (process.argv[2] === "movie-this") {
           "\n--------------------------------------------------------------------\n"
       );
     }
+  });
+}
+//---4-----------------------------------------------
+//`node liri.js do-what-it-says`
+// Core node package for reading and writing files
+
+if (process.argv[2] === "do-what-it-says") {
+  var fs = require("fs");
+  fs.readFile("random.txt", "utf8", function(error, data) {
+    // If the code experiences any errors it will log the error to the console.
+    if (error) {
+      return console.log(error);
+    }
+
+    console.log(data);
+    var dataArr = data.split(",");
+    console.log(dataArr);
+
+    var command = process.argv[2] = dataArr[0]; 
+    var newSearch = process.argv[3] = dataArr[1]; 
+    if (command === "spotify-this-song"){
+      searchSong(newSearch);
+    }else if (command === "movie-this"){
+
+    }else if (command === "concert-this"){
+      
+    }
+
+    
   });
 }
