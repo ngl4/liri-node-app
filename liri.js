@@ -148,6 +148,9 @@ if (process.argv[2] === "spotify-this-song") {
      songName += nodeArgs[i];
    }
  }
+ //NOTE: you can also do this way!!!!
+ //node liri.js spotify-this-song "somewhere over the rainbow"
+//console.log(process.argv[3]);
   searchSong(songName);
 }
 //---2-----------------------------------------------
