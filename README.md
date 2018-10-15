@@ -6,7 +6,7 @@ This application is built with jQuery with npm Request, Moment, DotEnv, Node-Spo
 
 **Here is the Demo:**
 
-<div align="center"><img src="https://github.com/ngl4/liri-node-app/blob/master/liri-node-app.gif" width="750" height="450"></div>
+<div align="center"><img src="https://github.com/ngl4/liri-node-app/blob/master/liri-node-app.gif" width="710" height="450"></div>
 
 &nbsp;
 
