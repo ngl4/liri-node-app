@@ -6,13 +6,13 @@ This application is built with jQuery with npm Request, Moment, DotEnv, Node-Spo
 
 **Here is the Demo:**
 
-<div align="center"><img src="https://github.com/ngl4/liri-node-app/blob/master/liri-node-app.gif" width="850" height="550"></div>
+<div align="center"><img src="https://github.com/ngl4/liri-node-app/blob/master/liri-node-app.gif" width="750" height="450"></div>
 
 &nbsp;
 
 **Here is the Demo to log text:** 
 
-![Alt Text](https://github.com/ngl4/liri-node-app/blob/master/log.gif)
+<div align="center"><img src="https://github.com/ngl4/liri-node-app/blob/master/log.gif" width="519" height="500"></div>
 
 &nbsp;
 
