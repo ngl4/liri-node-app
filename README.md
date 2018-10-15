@@ -17,6 +17,6 @@ This application is built with jQuery with npm Request, Moment, DotEnv, Node-Spo
 &nbsp;
 
 #### Reflection
-I personally like to play around with APIs and so I really enjoy the process building this application. The only advice I have for myself is that this application can be more user-friendly even without the demo videos above. There are still a lot of room for improvement for this application.
+I personally like to play around with APIs and so I really enjoy the process building this application. The only advice I have for myself is that this application can be more user-friendly even without the demo videos above. There are still a lot of room for improvement for this application. :+1:
 
 
